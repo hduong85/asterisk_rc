@@ -33,6 +33,7 @@ import platform
 import subprocess
 import sys
 import vim
+import os
 
 # set g:clang_format_path to the path to clang-format if it is not on the path
 # Change this to the full path if clang-format is not on the path.
@@ -96,11 +97,10 @@ def main():
     command += lines
   if fallback_style:
     command.extend(['-fallback-style', fallback_style])
-  if vim.current.buffer.name:
-    command.extend(['-assume-filename', vim.current.buffer.name])
   p = subprocess.Popen(command,
                        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                       stdin=subprocess.PIPE, startupinfo=startupinfo)
+                       stdin=subprocess.PIPE, startupinfo=startupinfo,
+                       cwd=os.getcwd())
   stdout, stderr = p.communicate(input=text.encode(encoding))
 
   # If successful, replace buffer contents.
