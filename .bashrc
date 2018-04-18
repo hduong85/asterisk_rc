@@ -105,8 +105,21 @@ alias l='ls -CF'
 alias gitdiff='git diff --no-index'
 alias mcscope='find . -name '*.[chS]' -print > cscope.files; cscope -R -b -q -k; ctags -L cscope.files'
 
+alias go_explorer='explorer.exe $(cygpath -d $(pwd))'
+
 alias ll='ls -Alrt'
 
 unset SSH_ASKPASS
 export MAILCHECK=0
 export CYGWIN=winsymlinks:nativestrict
+
+# Welcome message
+hour=`date +%H`
+
+if [ $hour -lt 12 ]; then
+    echo "Good morning, Huy Duong!" | figlet
+elif [ $hour -lt 18 ]; then
+    echo "Good afternoon, Huy Duong!" | figlet
+else
+    echo "Good evening, Huy Duong!" | figlet
+fi

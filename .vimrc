@@ -1,21 +1,33 @@
-set nocompatible
-filetype off
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-set term=xterm
-set t_Co=256
-let &t_AB="\e[48;5;%dm"
-let &t_AF="\e[38;5;%dm"
-
+" set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" let Vundle manage Vundle
-" required!
-Plugin 'gmarik/Vundle.vim'
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
-" My Plugins here:
-"
-" original repos on github
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
 " Plugin 'Lokaltog/vim-easymotion'
 " Plugin 'rstacruz/sparkup', {'rtp': 'vim'}
 " Plugin 'tpope/vim-rails.git'
@@ -24,7 +36,6 @@ Plugin 'sjl/badwolf'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jtratner/vim-flavored-markdown'
 Plugin 'groenewege/vim-less'
-Plugin 'editorconfig-vim'
 Plugin 'bling/vim-airline'
 " Plugin 'airblade/vim-gitgutter'
 Plugin 'kien/ctrlp.vim'
@@ -47,10 +58,27 @@ Plugin 'bronson/vim-trailing-whitespace'
 " Plugin 'git://git.wincent.com/command-t.git'
 "Plugin 'JCLiang/vim-cscope-utils'
 " ...
+Plugin 'majutsushi/tagbar'
+Plugin 'xolox/vim-notes'
+Plugin 'xolox/vim-misc'
 call vundle#end()            " required
-filetype plugin indent on     " required!
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
 
-Bundle 'majutsushi/tagbar'
+set term=xterm
+set t_Co=256
+let &t_AB="\e[48;5;%dm"
+let &t_AF="\e[38;5;%dm"
 
 " Use mouse in vim
 "set mouse=a
@@ -63,30 +91,9 @@ syntax enable
 set nonumber
 set ruler
 
-" Command T settings
-let g:CommandTInputDebounce = 200
-let g:CommandTFileScanner = "watchman"
-let g:CommandTWildIgnore = &wildignore . ",**/bower_components/*" . ",**/node_modules/*" . ",**/vendor/*"
-let g:CommandTMaxHeight = 30
-let g:CommandTMaxFiles = 500000
-
-" CtrlP settings
-"
-let g:ctrlp_map = '<leader>t'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard']  " Windows
-
-" Syntastic
-let g:syntastic_javascript_checkers = ['']
-
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
 
 "Some tips from http://stevelosh.com/blog/2010/09/coming-home-to-vim/"
 
@@ -104,10 +111,6 @@ set backspace=indent,eol,start
 set laststatus=2
 " set relativenumber
 set cursorline
-
-" windows conemu fix
-inoremap <Char-0x07F> <BS>
-nnoremap <Char-0x07F> <BS>
 
 let mapleader = ","
 
@@ -133,8 +136,9 @@ nnoremap <leader><space> :noh<cr>
 " match the next brace
 nnoremap <tab> %
 vnoremap <tab> %
-set wrap
-" set textwidth=80
+set nowrap
+set textwidth=0
+set wrapmargin=0
 set formatoptions=cqt
 set linebreak
 
@@ -143,33 +147,6 @@ nnoremap j gj
 nnoremap k gk
 
 "User customizations"
-
-" Strips whitespace
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
-
-" Select pasted text
-nnoremap <leader>v V`]
-
-"Window splitting remap"
-nnoremap <leader>w <C-w>v<C-w>l
-nnoremap <leader>q <C-w>s<C-w>j
-nnoremap <C-h> <C-w>h
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <C-j> <C-w>j
-
-" Buffers
-nnoremap <leader>T :enew<cr>
-nnoremap gy :bnext<CR>
-nnoremap gt :bprevious<cr>
-nnoremap gd :bdelete<cr>
-nnoremap <leader>bl :ls<CR>
-
-" Theme stuff
-nnoremap <leader>1 :colorscheme obsidian<cr>
-nnoremap <leader>2 :colorscheme tomorrow-night-bright<cr>
-nnoremap <leader>3 :colorscheme molokai<cr>
-nnoremap <leader>4 :colorscheme badwolf<cr>
 
 " badwolf settings
 let g:badwolf_darkgutter = 1
@@ -211,6 +188,8 @@ augroup file_types
 	autocmd BufRead,BufNewFile *.py set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 	autocmd BufRead,BufNewFile *.html set expandtab tabstop=4 softtabstop=4 shiftwidth=4 ft=html syntax=html
 	autocmd BufRead,BufNewFile *.css set expandtab tabstop=4 softtabstop=4 shiftwidth=4 ft=css syntax=css
+	autocmd BufRead,BufNewFile *.c,*.C,*.h,*.H,*.cpp,*.hpp set expandtab tabstop=4 softtabstop=4 shiftwidth=4
+	autocmd BufRead,BufNewFile *.pl set tabstop=8 softtabstop=8 shiftwidth=8
 augroup END
 
 " Whitespace fixes
@@ -223,42 +202,24 @@ augroup whitespace
 	autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 	autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 	autocmd BufWinLeave * call clearmatches()
+	autocmd BufWritePre * %s/\s\+$//e
 augroup END
 
-set undolevels=20
+set undolevels=100
 set title
+nmap <C-l> :tabnext<CR>
+nmap <C-h> :tabprev<CR>
+set cindent
+set smarttab
 
 set noerrorbells
 set noswapfile
 set nobackup
 nnoremap ; :
 
-" Tabular
-nnoremap <leader>a= :Tabularize /=<CR>
-vnoremap <leader>a= :Tabularize /=<CR>
-nnoremap <leader>a: :Tabularize /:\zs<CR>
-vnoremap <leader>a: :Tabularize /:\zs<CR>
-
-" Custom maps
-set pastetoggle=<leader>p
-nnoremap <leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
-
-nnoremap <leader>vi :vsplit $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
-vnoremap <leader>" <esc>`<i"<esc>`>a"<esc>
-nnoremap <leader>re gg=G
-
-" Save
-noremap  <silent> <C-S> :update<CR>
-vnoremap <silent> <C-S> <C-C>:update<CR>
-inoremap <silent> <C-S> <C-O>:update<CR>
-
-" Abbreviations
-iabbrev adn and
-iabbrev waht what
-nnoremap H 00
-nnoremap L $
-inoremap jk <esc>
+" clang-format
+map <C-K> :pyf ~/.vim/clang-format/clang-format.py<cr>
+imap <C-K> <c-o>:pyf ~/.vim/clang-format/clang-format.py<cr>
 
 set fileformat=unix
 set fileformats=unix,dos
@@ -270,15 +231,10 @@ set background=dark
 " Uncomment the next line if your terminal is not configured for solarized
 colorscheme solarized
 
+let g:notes_directories=['/cygdrive/d/Documents/Notes']
+"let g:notes_conceal_italic=0
 
 nmap <F8> :TagbarToggle<CR>
-
-" Abbreviations
-"augroup abbreviations
-"autocmd!
-"autocmd FileType html :iabbrev <buffer> --- &mdash;
-"autocmd FileType javascript :iabbrev <buffer> ret return
-"augroup END
 
 " Disable auto comment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -307,19 +263,6 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 "
 " Jason Duell       jduell@alumni.princeton.edu     2002/3/7
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-nmap <C-l> :tabnext<CR>
-nmap <C-h> :tabprev<CR>
-set undolevels=100
-set cindent
-set smarttab
-"set shiftwidth=4
-"set tabstop=4
-"set ts=4
-"for kernel
-set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
-"for tianocore dev
-"set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
 "autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
 "autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
